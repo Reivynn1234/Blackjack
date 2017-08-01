@@ -1,4 +1,5 @@
 import tkinter
+from tkinter import *
 import random
 import sys
 
@@ -11,6 +12,10 @@ class Game(tkinter.Tk):
         # Name of the window
         self.title("BlackJack")
 
+        global Visual
+        Visual = Listbox()
+        Visual.pack(fill=tkinter.BOTH, expand=0)
+        
         # Creates the button for start
         button = tkinter.Button(text="Start", command=self.Start)
         button.pack(fill=tkinter.BOTH, expand=0)
@@ -149,6 +154,7 @@ class Game(tkinter.Tk):
         # prints player deck 
         print("This is your deck " + str(player))
         print(pscore)
+        List()
         #Bust conditions for both player and computer while betting 
         if pscore > 21:
             print("This is your opponent's deck " + str(computer))
@@ -167,6 +173,14 @@ class Game(tkinter.Tk):
             player2.append(player[1])
             player.remove(player2[0])
             split = True
+
+    global List
+    def List():
+        global Visual
+        global player
+        
+        Visual.insert(END,str(player))
+        Visual.update_idletasks()
 
 
 if __name__ == "__main__":
