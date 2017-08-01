@@ -108,7 +108,7 @@ class Game(tkinter.Tk):
             Visual.insert(END,"VICTORY")
         elif pscore == cscore and len(player) > len(computer):
             Visual.insert(END,"LOSE") 
-        elif pscore > cscore and pscore ==21:
+        elif pscore > cscore and pscore == 21 and len(player) == 2:
             Visual.insert(END,"BLACKJACK")
         elif pscore > cscore:
             Visual.insert(END,"VICTORY")
