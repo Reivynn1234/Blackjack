@@ -98,22 +98,23 @@ class Game(tkinter.Tk):
         while cscore <= 16 and len(computer) != 5:
             computer.append(deck.pop())
             score()
-        print("This is your opponent's deck " + str(computer))
+ 
         score()
+        Visual.insert(END,"This is your opponent's deck " + str(computer))
         # Compares the score and declares the winner
         if pscore == cscore and len(computer) == len(player):
-            print("DRAW")
+            Visual.insert(END,"DRAW")
         elif pscore == cscore and len(computer) > len(player):
-            print("VICTORY")
+            Visual.insert(END,"VICTORY")
         elif pscore == cscore and len(player) > len(computer):
-            print("LOSE") 
+            Visual.insert(END,"LOSE") 
         elif pscore > cscore and pscore ==21:
-            print("BLACKJACK")
+            Visual.insert(END,"BLACKJACK")
         elif pscore > cscore:
-            print("VICTORY")
+            Visual.insert(END,"VICTORY")
             sys.exit("You have won as your score is greater than computer score")
         elif pscore < cscore:
-            print("LOSE")
+            Visual.insert(END,"LOSE")
             sys.exit("You have won as computer score is greater than your score")
                
 
@@ -155,15 +156,8 @@ class Game(tkinter.Tk):
         print("This is your deck " + str(player))
         print(pscore)
         List()
-        #Bust conditions for both player and computer while betting 
-        if pscore > 21:
-            print("This is your opponent's deck " + str(computer))
-            print("BUST")
-            sys.exit("You have lost as your score is greater than 21")
-        elif cscore > 21:
-            print("This is your opponent's deck " + str(computer))
-            print("VICTORY")
-            sys.exit("You have won as computer score is greater than 21")
+
+        
 
     def Split(self):
         global player
@@ -178,10 +172,19 @@ class Game(tkinter.Tk):
     def List():
         global Visual
         global player
-        
-        Visual.insert(END,str(player))
+        Visual.delete(0, tkinter.END)
+        Visual.insert(END,"This is your deck " + str(player))
+        Visual.insert(END,"This is your score " + str(pscore))
         Visual.update_idletasks()
-
+        #Bust conditions for both player and computer while betting 
+        if pscore > 21:
+            Visual.insert(END,"This is your opponent's deck " + str(computer))
+            Visual.insert(END,"BUST")
+            sys.exit("You have lost as your score is greater than 21")
+        elif cscore > 21:
+            Visual.insert(END,"This is your opponent's deck " + str(computer))
+            Visual.insert(END,"VICTORY")
+            sys.exit("You have won as computer score is greater than 21")
 
 if __name__ == "__main__":
     application = Game()
