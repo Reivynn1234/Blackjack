@@ -3,13 +3,14 @@ from tkinter import *
 import random
 import sys
 
-split = False
+# split = False
 # This is for a GUI which has buttons
 class Game(tkinter.Tk):
     # Creates a the window 
     def __init__(self):
         tkinter.Tk.__init__(self)
         # Name of the window
+
         self.title("BlackJack")
 
         global Visual
@@ -23,8 +24,8 @@ class Game(tkinter.Tk):
         button = tkinter.Button(text="Hit", command=self.Hit)
         button.pack(fill=tkinter.BOTH, expand=0)
         # Creates the button for split
-        button = tkinter.Button(text="Split", command=self.Split)
-        button.pack(fill=tkinter.BOTH, expand=0)
+#        button = tkinter.Button(text="Split", command=self.Split)
+#        button.pack(fill=tkinter.BOTH, expand=0)
         # Creates the button for stand
         button = tkinter.Button(text="Stand", command=self.Stand)
         button.pack(fill=tkinter.BOTH, expand=0)
@@ -186,6 +187,7 @@ class Game(tkinter.Tk):
             Visual.insert(END,"VICTORY")
             sys.exit("You have won as computer score is greater than 21")
 
+        
 if __name__ == "__main__":
     application = Game()
     application.mainloop()
