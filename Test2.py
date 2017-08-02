@@ -40,7 +40,7 @@ class Game(tkinter.Tk):
         global computer
         global deck
         global player2
-        global split
+#        global split
         # pscore is player score 
         pscore = 0
         # cscore is computer score 
@@ -68,13 +68,13 @@ class Game(tkinter.Tk):
 
     # Get one card 
     def Hit(self):
-        global split
+#        global split
         print("HIT")
         #Deletes one card from the end of the deck and puts it in the player hand
         player.append(deck.pop())
         # When the player uses the split function draws a card for the other hand
-        if split == True:
-            player2.append(deck.pop())
+#        if split == True:
+#            player2.append(deck.pop())
         #Computer will keep drawing cards if it has less than 16 in score or has 5 cards drawn
         while cscore <= 16 and len(computer) != 5:
             computer.append(deck.pop())
@@ -92,8 +92,8 @@ class Game(tkinter.Tk):
         global split
         print("STAND")
         print("This is your deck " + str(player))
-        if split == True:
-            print("This is your other deck " + str(player2))
+#        if split == True:
+#            print("This is your other deck " + str(player2))
         #Computer will keep drawing cards if it has less than 16 in score or has 5 cards drawn
         while cscore <= 16 and len(computer) != 5:
             computer.append(deck.pop())
@@ -159,14 +159,14 @@ class Game(tkinter.Tk):
 
         
 
-    def Split(self):
-        global player
-        global pscore
-        global player2
-        if player[0] == "J" or player[0] == "Q" or player[0] == 10 or player[0] == "K" and player[1] == "K" or player[1] == "Q" or player[1] == "J" or player[1] == 10  and pscore == 20:
-            player2.append(player[1])
-            player.remove(player2[0])
-            split = True
+#    def Split(self):
+#        global player
+#        global pscore
+#        global player2
+#        if player[0] == "J" or player[0] == "Q" or player[0] == 10 or player[0] == "K" and player[1] == "K" or player[1] == "Q" or player[1] == "J" or player[1] == 10  and pscore == 20:
+#            player2.append(player[1])
+#            player.remove(player2[0])
+#            split = True
 
     global List
     def List():
