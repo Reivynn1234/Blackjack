@@ -233,16 +233,6 @@ class Game(tkinter.Tk):
         Visual.insert(END,"This is your score " + str(pscore))
         
         
-        #Bust conditions for both player and computer while betting
-        if player[(len(player))-1] == "A":
-            pscore = pscore + 11
-            # If it is over 21 it sets ace worth to 1
-            if pscore > 21:
-                pscore = pscore - 10
-        if computer[(len(computer))-1] == "A":
-            cscore = cscore + 11
-            if cscore > 21:
-                cscore = cscore - 10
         Visual.update_idletasks()
         if pscore > 21:
             Visual.insert(END,"This is your opponent's deck " + str(computer))
