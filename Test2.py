@@ -47,7 +47,6 @@ class Game(tkinter.Tk):
 
     # Reset/ Start the game 
     def Start(self):
-        print(money)
         print("START")
         global pscore
         global cscore
@@ -111,7 +110,7 @@ class Game(tkinter.Tk):
         bet = int(self.entry.get())
         print (bet)
         self.entry.delete(0,'end')
-        while bet > money:
+        while bet > money or bet <= 0:
             print("Please input a valid bet")
             self.entry.delete(0,'end')
             bet = int(self.entry.get())
@@ -224,6 +223,8 @@ class Game(tkinter.Tk):
         global player
         global money
         global bet
+        global pscore
+        global cscore
         Visual.delete(0, tkinter.END)        
         Visual.insert(END,"This is your money " + str(money))
         Visual.insert(END,"This is your bet " + str(bet))
@@ -231,17 +232,18 @@ class Game(tkinter.Tk):
         Visual.insert(END,"This is one of your opponent's cards: " + str(computer[0]))
         Visual.insert(END,"This is your score " + str(pscore))
         
-        Visual.update_idletasks()
+        
         #Bust conditions for both player and computer while betting
-        if player[(len(player)-1)] == "A":
+        if player[(len(player))-1] == "A":
             pscore = pscore + 11
             # If it is over 21 it sets ace worth to 1
             if pscore > 21:
                 pscore = pscore - 10
-        elif computer[(len(computer)-1)] == "A":
+        if computer[(len(computer))-1] == "A":
             cscore = cscore + 11
             if cscore > 21:
                 cscore = cscore - 10
+        Visual.update_idletasks()
         if pscore > 21:
             Visual.insert(END,"This is your opponent's deck " + str(computer))
             Visual.insert(END,"BUST")
