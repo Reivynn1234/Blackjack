@@ -3,9 +3,14 @@ from tkinter import *
 import random
 import sys
 
+
+money = 100
+
+
 # split = False
 # This is for a GUI which has buttons
 class Game(tkinter.Tk):
+
     # Creates a the window 
     def __init__(self):
         tkinter.Tk.__init__(self)
@@ -21,6 +26,13 @@ class Game(tkinter.Tk):
         button = tkinter.Button(text="Start", command=self.Start)
         button.pack(fill=tkinter.BOTH, expand=0)
         # Creates the button for hit
+
+        self.entry = tkinter.Entry()
+        self.entry.pack(fill=tkinter.BOTH, expand=0)
+
+        button = tkinter.Button(text="Bet", command=self.Bet)
+        button.pack(fill=tkinter.BOTH, expand=0)
+        
         button = tkinter.Button(text="Hit", command=self.Hit)
         button.pack(fill=tkinter.BOTH, expand=0)
         # Creates the button for split
@@ -30,10 +42,12 @@ class Game(tkinter.Tk):
         button = tkinter.Button(text="Stand", command=self.Stand)
         button.pack(fill=tkinter.BOTH, expand=0)
 
-
+        button = tkinter.Button(text="Reset",command=self.Reset)
+        button.pack(fill=tkinter.BOTH, expand=0)
 
     # Reset/ Start the game 
     def Start(self):
+        print(money)
         print("START")
         global pscore
         global cscore
@@ -41,6 +55,9 @@ class Game(tkinter.Tk):
         global computer
         global deck
         global player2
+        global money
+        global bet
+        bet = 0 
 #        global split
         # pscore is player score 
         pscore = 0
@@ -66,6 +83,7 @@ class Game(tkinter.Tk):
         print ("This is one of your opponent's cards: " + str(computer[0]))
         print ("This is your deck " + str(player))
         score()
+        Visual.insert(END,"Please input your bet")
 
     # Get one card 
     def Hit(self):
@@ -86,11 +104,26 @@ class Game(tkinter.Tk):
         # If the players cant draw anymore cards it automatically ends the gameb
         if len(player) == 5 and len(computer) == 5:
             Stand()
+
+    def Bet(self):
+        global money
+        global bet
+        bet = int(self.entry.get())
+        print (bet)
+        self.entry.delete(0,'end')
+        while bet > money:
+            print("Please input a valid bet")
+            self.entry.delete(0,'end')
+            bet = int(self.entry.get())
+        List()
+    
     # Ends the game 
     def Stand(self):
         global cscore
         global pscore
         global split
+        global money
+        global bet
         print("STAND")
         print("This is your deck " + str(player))
 #        if split == True:
@@ -107,17 +140,33 @@ class Game(tkinter.Tk):
             Visual.insert(END,"DRAW")
         elif pscore == cscore and len(computer) > len(player):
             Visual.insert(END,"VICTORY")
+            money = money + bet
+            Visual.insert(END,"You won " + str(bet) +  " you have " + str(money) + " money")
         elif pscore == cscore and len(player) > len(computer):
-            Visual.insert(END,"LOSE") 
+            Visual.insert(END,"LOSE")
+            money = money - bet
+            Visual.insert(END,"You lost " + str(bet) +  " you have " + str(money) + " money")
         elif pscore > cscore and pscore == 21 and len(player) == 2:
             Visual.insert(END,"BLACKJACK")
+            money = money + bet
+            Visual.insert(END,"You won " + str(bet) +  " you have " + str(money) + " money")
         elif pscore > cscore:
             Visual.insert(END,"VICTORY")
+            money = money + bet
+            Visual.insert(END,"You won " + str(bet) +  " you have " + str(money) + " money")
             sys.exit("You have won as your score is greater than computer score")
         elif pscore < cscore:
             Visual.insert(END,"LOSE")
+            money = money - bet
+            Visual.insert(END,"You lost " + str(bet) +  " you have " + str(money) + " money")
             sys.exit("You have won as computer score is greater than your score")
-               
+
+    def Reset(self):
+        global money
+        money = 100
+        List()
+        self.Start()
+              
 
     # Calculates the current score
     global score
@@ -173,21 +222,42 @@ class Game(tkinter.Tk):
     def List():
         global Visual
         global player
-        Visual.delete(0, tkinter.END)
+        global money
+        global bet
+        Visual.delete(0, tkinter.END)        
+        Visual.insert(END,"This is your money " + str(money))
+        Visual.insert(END,"This is your bet " + str(bet))
         Visual.insert(END,"This is your deck " + str(player))
+        Visual.insert(END,"This is one of your opponent's cards: " + str(computer[0]))
         Visual.insert(END,"This is your score " + str(pscore))
+        
         Visual.update_idletasks()
-        #Bust conditions for both player and computer while betting 
+        #Bust conditions for both player and computer while betting
+        if player[(len(player)-1)] == "A":
+            pscore = pscore + 11
+            # If it is over 21 it sets ace worth to 1
+            if pscore > 21:
+                pscore = pscore - 10
+        elif computer[(len(computer)-1)] == "A":
+            cscore = cscore + 11
+            if cscore > 21:
+                cscore = cscore - 10
         if pscore > 21:
             Visual.insert(END,"This is your opponent's deck " + str(computer))
             Visual.insert(END,"BUST")
+            money = money - bet
+            Visual.insert(END,"You lost " + str(bet) +  " you have " + str(money) + " money")
             sys.exit("You have lost as your score is greater than 21")
         elif cscore > 21:
             Visual.insert(END,"This is your opponent's deck " + str(computer))
             Visual.insert(END,"VICTORY")
+            money = money + bet
+            Visual.insert(END,"You won " + str(bet) +  " you have " + str(money) + " money")
             sys.exit("You have won as computer score is greater than 21")
 
-        
+
+
+
 if __name__ == "__main__":
     application = Game()
     application.mainloop()
