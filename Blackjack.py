@@ -1,8 +1,7 @@
 import tkinter
 from tkinter import *
 import random
-
-
+import sys
 money = 100
 
 
@@ -237,13 +236,14 @@ class Game(tkinter.Tk):
             Visual.insert(END,"BUST")
             money = money - bet
             Visual.insert(END,"You lost " + str(bet) +  " you have " + str(money) + " money")
+            sys.exit()
 
         elif cscore > 21:
             Visual.insert(END,"This is your opponent's deck " + str(computer))
             Visual.insert(END,"VICTORY")
             money = money + bet
             Visual.insert(END,"You won " + str(bet) +  " you have " + str(money) + " money")
- 
+            sys.exit()
 
 
 if __name__ == "__main__":
